@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { NextPage } from "next";
 import Head from "next/head";
 
@@ -15,6 +16,9 @@ const Home: NextPage = () => {
 
       <main className="container">
         <h2>Build something great</h2>
+        <div className="text-black">
+          <h2>Icon test</h2>
+        </div>
       </main>
 
       <footer></footer>

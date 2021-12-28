@@ -5,6 +5,19 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      primary: "#FDA214",
+      secondary: "#BCCED9",
+      teritiary: "#304859",
+      quaternary: "#152938",
+      "primary-shade": "#F2F2F2",
+      "secondary-shade": "#7191A5",
+      "teritiary-shade": "#6395B8",
+      "quaternary-shade": "#FCFCFC",
+    },
+    fontFamily: {
+      "atkinson-hyperlegible": ["Atkinson Hyperlegible", "sans-serif"],
+    },
   },
   plugins: [],
 };

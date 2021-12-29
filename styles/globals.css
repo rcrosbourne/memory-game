@@ -2,3 +2,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn-active {
+    @apply bg-teritiary;
+  }
+  .btn-idle {
+    @apply bg-secondary-shade;
+  }
+  .btn-secondary {
+    @apply rounded-full  text-primary-shade font-bold leading-5 hover:bg-teritiary-shade transition-colors focus:outline-none focus:ring-2 focus:ring-quaternary focus:ring-opacity-75;
+  }
+  .btn-primary {
+    @apply bg-primary text-[18px] text-center text-quaternary-shade leading-6 rounded-full w-full py-3 font-bold hover:bg-primary-hover transition-colors focus:outline-none focus:ring-2 focus:ring-primary-hover focus:ring-opacity-75;
+  }
+}

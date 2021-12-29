@@ -53,10 +53,10 @@ const Home: NextPage = () => {
               <div className="flex items-center justify-between gap-[11px] w-full mt-[11px]">
                 {menuOptions.themes.map((theme) => (
                   <RadioGroup.Option value={theme} key={theme}>
-                    {({ checked }) => (
+                    {({ checked, active }) => (
                       <button
                         className={`${
-                          checked ? "btn-active" : "btn-idle"
+                          checked || active ? "btn-active" : "btn-idle"
                         } min-w-[134px] py-[10px] px-[33px] btn-secondary`}
                       >
                         {theme}
@@ -85,7 +85,7 @@ const Home: NextPage = () => {
                     {({ checked, active }) => (
                       <button
                         className={`${
-                          checked ? "btn-active" : "btn-idle"
+                          checked || active ? "btn-active" : "btn-idle"
                         } btn-secondary px-[27px] py-[10px]`}
                       >
                         {player}
@@ -111,10 +111,10 @@ const Home: NextPage = () => {
               <div className="grid grid-cols-2 gap-[10px] w-full mt-[11px]">
                 {menuOptions.gridSizes.map((gridSize) => (
                   <RadioGroup.Option value={gridSize} key={`grid-${gridSize}`}>
-                    {({ checked }) => (
+                    {({ checked, active }) => (
                       <button
                         className={`${
-                          checked ? "btn-active" : "btn-idle"
+                          checked || active ? "btn-active" : "btn-idle"
                         } btn-secondary px-[53px] py-[10px]`}
                       >
                         {gridSize}

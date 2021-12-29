@@ -58,7 +58,7 @@ const Home: NextPage = () => {
               <span className="text-left text-secondary-shade font-bold text-[15px] leading[19px]">
                 Grid Size
               </span>
-              <div className="flex items-center justify-between gap-[11px]">
+              <div className="flex items-center justify-between gap-[11px] w-full mt-[11px]">
                 <button className="btn-secondary btn-active px-[53px] py-[10px]">
                   4x4
                 </button>

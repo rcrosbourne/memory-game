@@ -483,7 +483,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .btn-secondary{
   border-radius: 9999px;
   font-weight: 700;
-  line-height: 1.25rem;
   --tw-text-opacity: 1;
   color: rgb(242 242 242 / var(--tw-text-opacity));
   transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
@@ -552,8 +551,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 5rem;
 }
 
-.mt-\[45px\]{
-  margin-top: 45px;
+.mt-10{
+  margin-top: 2.5rem;
+}
+
+.mt-3{
+  margin-top: 0.75rem;
 }
 
 .mt-\[11px\]{
@@ -562,10 +565,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .block{
   display: block;
-}
-
-.flex{
-  display: flex;
 }
 
 .grid{
@@ -588,24 +587,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-width: 327px;
 }
 
-.grid-cols-4{
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
 .grid-cols-2{
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.items-center{
-  align-items: center;
+.grid-cols-4{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.justify-between{
-  justify-content: space-between;
-}
-
-.gap-\[11px\]{
-  gap: 11px;
+.gap-3{
+  gap: 0.75rem;
 }
 
 .gap-\[10px\]{
@@ -685,12 +676,21 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 15px;
 }
 
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 .font-bold{
   font-weight: 700;
 }
 
 .leading-\[39\.68px\]{
   line-height: 39.68px;
+}
+
+.leading-5{
+  line-height: 1.25rem;
 }
 
 .text-primary-shade{
@@ -703,7 +703,52 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(113 145 165 / var(--tw-text-opacity));
 }
 
-.focus\:outline-none:focus{
-  outline: 2px solid transparent;
-  outline-offset: 2px;
+@media (min-width: 768px){
+  .md\:mt-40{
+    margin-top: 10rem;
+  }
+
+  .md\:mt-20{
+    margin-top: 5rem;
+  }
+
+  .md\:max-w-\[654px\]{
+    max-width: 654px;
+  }
+
+  .md\:gap-8{
+    gap: 2rem;
+  }
+
+  .md\:gap-5{
+    gap: 1.25rem;
+  }
+
+  .md\:p-14{
+    padding: 3.5rem;
+  }
+
+  .md\:py-4{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .md\:text-xl{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:text-2xl{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .md\:text-3xl{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .md\:leading-8{
+    line-height: 2rem;
+  }
 }

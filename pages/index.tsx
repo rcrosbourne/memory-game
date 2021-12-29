@@ -32,11 +32,11 @@ const Home: NextPage = () => {
       </Head>
 
       <main className=" bg-quaternary min-h-screen w-full grid px-6 mx-auto">
-        <div className="container mx-auto text-center max-w-[327px]">
-          <h2 className="text-primary-shade font-atkinson-hyperlegible text-2xl mt-20 font-bold leading-[39.68px]">
+        <div className="container mx-auto text-center max-w-[327px] md:max-w-[654px]">
+          <h2 className="text-primary-shade font-atkinson-hyperlegible text-2xl mt-20 font-bold leading-[39.68px] md:mt-40">
             memory
           </h2>
-          <div className="bg-primary-shade rounded-[10px] mt-[45px] p-6 grid gap-y-8">
+          <div className="bg-primary-shade rounded-[10px] mt-10 p-6 grid gap-y-8 md:mt-20 md:p-14 md:max-w-[654px]">
             {/* Theme Selection Radio Group */}
             <RadioGroup
               value={menuSelection.theme}
@@ -45,12 +45,12 @@ const Home: NextPage = () => {
               }
             >
               <RadioGroup.Label>
-                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px]">
+                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px] md:text-xl">
                   Select Theme
                 </span>
               </RadioGroup.Label>
 
-              <div className="flex items-center justify-between gap-[11px] w-full mt-[11px]">
+              <div className="grid grid-cols-2 gap-3 w-full mt-3 md:gap-8">
                 {menuOptions.themes.map((theme) => (
                   <RadioGroup.Option
                     value={theme}
@@ -61,7 +61,7 @@ const Home: NextPage = () => {
                       <button
                         className={`${
                           checked || active ? "btn-active" : "btn-idle"
-                        } min-w-[134px] py-[10px] px-[33px] btn-secondary`}
+                        } min-w-[134px] py-[10px] px-[33px] btn-secondary leading-5 md:text-2xl`}
                       >
                         {theme}
                       </button>
@@ -78,12 +78,12 @@ const Home: NextPage = () => {
               }
             >
               <RadioGroup.Label>
-                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px]">
+                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px] md:text-xl">
                   Number of Players
                 </span>
               </RadioGroup.Label>
 
-              <div className="grid grid-cols-4 gap-[10px] w-full mt-[11px]">
+              <div className="grid grid-cols-4 gap-3 w-full mt-3 md:gap-5">
                 {menuOptions.numberOfPlayers.map((player) => (
                   <RadioGroup.Option
                     value={player}
@@ -94,7 +94,7 @@ const Home: NextPage = () => {
                       <button
                         className={`${
                           checked || active ? "btn-active" : "btn-idle"
-                        } btn-secondary px-[27px] py-[10px]`}
+                        } btn-secondary px-[27px] py-[10px] leading-5 md:text-2xl`}
                       >
                         {player}
                       </button>
@@ -111,7 +111,7 @@ const Home: NextPage = () => {
               }
             >
               <RadioGroup.Label>
-                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px]">
+                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px] md:text-xl">
                   Grid Size
                 </span>
               </RadioGroup.Label>
@@ -127,7 +127,7 @@ const Home: NextPage = () => {
                       <button
                         className={`${
                           checked || active ? "btn-active" : "btn-idle"
-                        } btn-secondary px-[53px] py-[10px]`}
+                        } btn-secondary px-[53px] py-[10px] leading-5 md:text-2xl`}
                       >
                         {gridSize}
                       </button>
@@ -138,7 +138,9 @@ const Home: NextPage = () => {
             </RadioGroup>
             {/* Submit */}
             <div className="w-full">
-              <button className="btn-primary w-full py-3">Start Game</button>
+              <button className="btn-primary w-full py-3 md:text-3xl md:py-4">
+                Start Game
+              </button>
             </div>
           </div>
         </div>

@@ -138,7 +138,7 @@ const Home: NextPage = () => {
             </RadioGroup>
             {/* Submit */}
             <div className="w-full">
-              <button className="btn-primary w-full py-3 md:text-3xl md:py-4">
+              <button className="btn-primary w-full py-3 md:text-3xl md:py-4 text-xl">
                 Start Game
               </button>
             </div>

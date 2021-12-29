@@ -564,6 +564,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 2rem;
 }
 
+.block{
+  display: block;
+}
+
+.inline-block{
+  display: inline-block;
+}
+
 .flex{
   display: flex;
 }
@@ -588,6 +596,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-width: 327px;
 }
 
+.grid-cols-4{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-cols-2{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .flex-col{
   flex-direction: column;
 }
@@ -606,6 +622,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .gap-\[10px\]{
   gap: 10px;
+}
+
+.gap-y-8{
+  row-gap: 2rem;
 }
 
 .rounded-\[10px\]{
@@ -698,4 +718,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-secondary-shade{
   --tw-text-opacity: 1;
   color: rgb(113 145 165 / var(--tw-text-opacity));
+}
+
+.focus\:bg-quaternary:focus{
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 41 56 / var(--tw-bg-opacity));
 }

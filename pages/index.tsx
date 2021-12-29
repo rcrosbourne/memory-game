@@ -1,8 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { RadioGroup } from "@headlessui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
+import React, { useEffect } from "react";
 
+const menuOptions = {
+  themes: ["Numbers", "Icons"],
+  numberOfPlayers: ["1", "2", "3", "4"],
+  gridSizes: ["4x4", "6x6"],
+};
+interface menuSelection {
+  theme: string;
+  numberOfPlayers: string;
+  gridSize: string;
+}
 const Home: NextPage = () => {
+  const [menuSelection, setMenuSelection] = React.useState<menuSelection>({
+    theme: "Numbers",
+    numberOfPlayers: "1",
+    gridSize: "4x4",
+  });
   return (
     <div className="">
       <Head>
@@ -19,56 +36,96 @@ const Home: NextPage = () => {
           <h2 className="text-primary-shade font-atkinson-hyperlegible text-2xl mt-20 font-bold leading-[39.68px]">
             memory
           </h2>
-          <div className="bg-primary-shade rounded-[10px] mt-[45px] p-6 grid">
-            <div className="flex flex-col">
-              <span className="text-left text-secondary-shade font-bold text-[15px] leading[19px]">
-                Select Theme
-              </span>
+          <div className="bg-primary-shade rounded-[10px] mt-[45px] p-6 grid gap-y-8">
+            {/* Theme Selection Radio Group */}
+            <RadioGroup
+              value={menuSelection.theme}
+              onChange={(e) =>
+                setMenuSelection((prev) => ({ ...prev, theme: e }))
+              }
+            >
+              <RadioGroup.Label>
+                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px]">
+                  Select Theme
+                </span>
+              </RadioGroup.Label>
+
               <div className="flex items-center justify-between gap-[11px] w-full mt-[11px]">
-                <button className="min-w-[134px] py-[10px] px-[33px] btn-secondary btn-active">
-                  Numbers
-                </button>
-                <button className="min-w-[134px] py-[10px] px-[33px] btn-secondary btn-idle">
-                  Icons
-                </button>
+                {menuOptions.themes.map((theme) => (
+                  <RadioGroup.Option value={theme} key={theme}>
+                    {({ checked }) => (
+                      <button
+                        className={`${
+                          checked ? "btn-active" : "btn-idle"
+                        } min-w-[134px] py-[10px] px-[33px] btn-secondary`}
+                      >
+                        {theme}
+                      </button>
+                    )}
+                  </RadioGroup.Option>
+                ))}
               </div>
-            </div>
+            </RadioGroup>
+            {/* Number of players Radio Group */}
+            <RadioGroup
+              value={menuSelection.numberOfPlayers}
+              onChange={(e) =>
+                setMenuSelection((prev) => ({ ...prev, numberOfPlayers: e }))
+              }
+            >
+              <RadioGroup.Label>
+                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px]">
+                  Number of Players
+                </span>
+              </RadioGroup.Label>
 
-            <div className="mt-8 flex flex-col">
-              <span className="text-left text-secondary-shade font-bold text-[15px] leading[19px]">
-                Number of Players
-              </span>
-              <div className="flex items-center justify-between gap-[10px] w-full mt-[11px]">
-                <button className="btn-secondary btn-active px-[27px] py-[10px]">
-                  1
-                </button>
-                <button className="btn-secondary btn-idle px-[27px] py-[10px]">
-                  2
-                </button>
-                <button className="btn-secondary btn-idle px-[27px] py-[10px]">
-                  3
-                </button>
-                <button className="btn-secondary btn-idle px-[27px] py-[10px]">
-                  4
-                </button>
+              <div className="grid grid-cols-4 gap-[10px] w-full mt-[11px]">
+                {menuOptions.numberOfPlayers.map((player) => (
+                  <RadioGroup.Option value={player} key={`player-${player}`}>
+                    {({ checked, active }) => (
+                      <button
+                        className={`${
+                          checked ? "btn-active" : "btn-idle"
+                        } btn-secondary px-[27px] py-[10px]`}
+                      >
+                        {player}
+                      </button>
+                    )}
+                  </RadioGroup.Option>
+                ))}
               </div>
-            </div>
+            </RadioGroup>
+            {/* Grid Size Radio Group */}
+            <RadioGroup
+              value={menuSelection.gridSize}
+              onChange={(e) =>
+                setMenuSelection((prev) => ({ ...prev, gridSize: e }))
+              }
+            >
+              <RadioGroup.Label>
+                <span className="block text-left text-secondary-shade font-bold text-[15px] leading[19px]">
+                  Grid Size
+                </span>
+              </RadioGroup.Label>
 
-            <div className="mt-8 flex flex-col">
-              <span className="text-left text-secondary-shade font-bold text-[15px] leading[19px]">
-                Grid Size
-              </span>
-              <div className="flex items-center justify-between gap-[11px] w-full mt-[11px]">
-                <button className="btn-secondary btn-active px-[53px] py-[10px]">
-                  4x4
-                </button>
-                <button className="btn-secondary btn-idle px-[53px] py-[10px]">
-                  6x6
-                </button>
+              <div className="grid grid-cols-2 gap-[10px] w-full mt-[11px]">
+                {menuOptions.gridSizes.map((gridSize) => (
+                  <RadioGroup.Option value={gridSize} key={`grid-${gridSize}`}>
+                    {({ checked }) => (
+                      <button
+                        className={`${
+                          checked ? "btn-active" : "btn-idle"
+                        } btn-secondary px-[53px] py-[10px]`}
+                      >
+                        {gridSize}
+                      </button>
+                    )}
+                  </RadioGroup.Option>
+                ))}
               </div>
-            </div>
-
-            <div className="mt-8 flex w-full">
+            </RadioGroup>
+            {/* Submit */}
+            <div className="w-full">
               <button className="btn-primary w-full py-3">Start Game</button>
             </div>
           </div>

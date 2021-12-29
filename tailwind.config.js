@@ -15,6 +15,7 @@ module.exports = {
       "secondary-shade": "#7191A5",
       "teritiary-shade": "#6395B8",
       "quaternary-shade": "#FCFCFC",
+      "quinary-shade": "#DFE7EC",
     },
     fontFamily: {
       "atkinson-hyperlegible": ["Atkinson Hyperlegible", "sans-serif"],

@@ -611,6 +611,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-radius: 10px;
 }
 
+.rounded-xl{
+  border-radius: 0.75rem;
+}
+
 .bg-quaternary{
   --tw-bg-opacity: 1;
   background-color: rgb(21 41 56 / var(--tw-bg-opacity));
@@ -655,6 +659,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 0.75rem;
 }
 
+.px-8{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.px-7{
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
 .text-left{
   text-align: left;
 }
@@ -679,6 +693,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-xl{
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-base{
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .font-bold{

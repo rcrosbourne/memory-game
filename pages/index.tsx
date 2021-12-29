@@ -52,7 +52,11 @@ const Home: NextPage = () => {
 
               <div className="flex items-center justify-between gap-[11px] w-full mt-[11px]">
                 {menuOptions.themes.map((theme) => (
-                  <RadioGroup.Option value={theme} key={theme}>
+                  <RadioGroup.Option
+                    value={theme}
+                    key={theme}
+                    as={React.Fragment}
+                  >
                     {({ checked, active }) => (
                       <button
                         className={`${
@@ -84,7 +88,7 @@ const Home: NextPage = () => {
                   <RadioGroup.Option
                     value={player}
                     key={`player-${player}`}
-                    className="focus:outline-none"
+                    as={React.Fragment}
                   >
                     {({ checked, active }) => (
                       <button
@@ -114,7 +118,11 @@ const Home: NextPage = () => {
 
               <div className="grid grid-cols-2 gap-[10px] w-full mt-[11px]">
                 {menuOptions.gridSizes.map((gridSize) => (
-                  <RadioGroup.Option value={gridSize} key={`grid-${gridSize}`}>
+                  <RadioGroup.Option
+                    value={gridSize}
+                    key={`grid-${gridSize}`}
+                    as={React.Fragment}
+                  >
                     {({ checked, active }) => (
                       <button
                         className={`${

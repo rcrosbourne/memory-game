@@ -38,7 +38,7 @@ const Home: NextPage = () => {
               <span className="text-left text-secondary-shade font-bold text-[15px] leading[19px]">
                 Number of Players
               </span>
-              <div className="flex items-center justify-between gap-[10px]">
+              <div className="flex items-center justify-between gap-[10px] w-full mt-[11px]">
                 <button className="btn-secondary btn-active px-[27px] py-[10px]">
                   1
                 </button>

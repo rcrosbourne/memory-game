@@ -81,7 +81,11 @@ const Home: NextPage = () => {
 
               <div className="grid grid-cols-4 gap-[10px] w-full mt-[11px]">
                 {menuOptions.numberOfPlayers.map((player) => (
-                  <RadioGroup.Option value={player} key={`player-${player}`}>
+                  <RadioGroup.Option
+                    value={player}
+                    key={`player-${player}`}
+                    className="focus:outline-none"
+                  >
                     {({ checked, active }) => (
                       <button
                         className={`${

@@ -4,9 +4,9 @@ import React from "react";
 import { Settings } from ".";
 
 const NewGame: NextPage = () => {
-  const settings = JSON.parse(
-    localStorage.getItem("gameSettings") || "{}"
-  ) as Settings;
+  //   const settings = JSON.parse(
+  //     localStorage.getItem("gameSettings") || "{}"
+  //   ) as Settings;
 
   return (
     <div className="">

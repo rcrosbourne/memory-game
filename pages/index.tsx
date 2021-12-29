@@ -1,25 +1,31 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RadioGroup } from "@headlessui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import React, { useEffect } from "react";
-
+import React from "react";
+import { useRouter } from "next/router";
 const menuOptions = {
   themes: ["Numbers", "Icons"],
   numberOfPlayers: ["1", "2", "3", "4"],
   gridSizes: ["4x4", "6x6"],
 };
-interface menuSelection {
+export interface Settings {
   theme: string;
   numberOfPlayers: string;
   gridSize: string;
 }
 const Home: NextPage = () => {
-  const [menuSelection, setMenuSelection] = React.useState<menuSelection>({
+  const router = useRouter();
+  const [gameSettings, setGameSettings] = React.useState<Settings>({
     theme: "Numbers",
     numberOfPlayers: "1",
     gridSize: "4x4",
   });
+  const saveGameSettings = () => {
+    //Save game settings to local storage
+    localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
+    //Navigate to the game page
+    router.push("/new-game");
+  };
   return (
     <div className="">
       <Head>
@@ -39,9 +45,9 @@ const Home: NextPage = () => {
           <div className="bg-primary-shade rounded-xl mt-10 p-6 grid gap-y-8 md:mt-20 md:p-14 md:max-w-[654px]">
             {/* Theme Selection Radio Group */}
             <RadioGroup
-              value={menuSelection.theme}
+              value={gameSettings.theme}
               onChange={(e) =>
-                setMenuSelection((prev) => ({ ...prev, theme: e }))
+                setGameSettings((prev) => ({ ...prev, theme: e }))
               }
             >
               <RadioGroup.Label>
@@ -72,13 +78,13 @@ const Home: NextPage = () => {
             </RadioGroup>
             {/* Number of players Radio Group */}
             <RadioGroup
-              value={menuSelection.numberOfPlayers}
+              value={gameSettings.numberOfPlayers}
               onChange={(e) =>
-                setMenuSelection((prev) => ({ ...prev, numberOfPlayers: e }))
+                setGameSettings((prev) => ({ ...prev, numberOfPlayers: e }))
               }
             >
               <RadioGroup.Label>
-                <span className="block text-left text-secondary-shade font-bold leading[19px] md:text-xl">
+                <span className="block text-left text-secondary-shade font-bold md:text-xl">
                   Number of Players
                 </span>
               </RadioGroup.Label>
@@ -105,9 +111,9 @@ const Home: NextPage = () => {
             </RadioGroup>
             {/* Grid Size Radio Group */}
             <RadioGroup
-              value={menuSelection.gridSize}
+              value={gameSettings.gridSize}
               onChange={(e) =>
-                setMenuSelection((prev) => ({ ...prev, gridSize: e }))
+                setGameSettings((prev) => ({ ...prev, gridSize: e }))
               }
             >
               <RadioGroup.Label>
@@ -138,7 +144,10 @@ const Home: NextPage = () => {
             </RadioGroup>
             {/* Submit */}
             <div className="w-full">
-              <button className="btn-primary w-full py-3 md:text-3xl md:py-4 text-xl">
+              <button
+                className="btn-primary leading-6 w-full py-3 md:text-3xl md:py-4 text-xl"
+                onClick={saveGameSettings}
+              >
                 Start Game
               </button>
             </div>

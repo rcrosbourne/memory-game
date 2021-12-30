@@ -41,6 +41,14 @@ const NewGame: NextPage = () => {
   const [gameClock, setGameClock] = React.useState<number>(0);
   const [moves, setMoves] = React.useState<number>(0);
 
+  //timer that counts up
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGameClock((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  });
+
   useEffect(() => {
     if (revealed.length === 2) {
       if (revealed[0].value === revealed[1].value) {

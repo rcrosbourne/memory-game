@@ -1,12 +1,19 @@
+import { Transition, Dialog } from "@headlessui/react";
 import { NextPage } from "next";
 import Head from "next/head";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Settings } from ".";
 
 enum TokenState {
   Hidden,
   Revealed,
   Flagged,
+}
+enum GameState {
+  Started,
+  Ended,
+  Paused,
+  PauseSelecting,
 }
 interface Token {
   state: TokenState;
@@ -36,6 +43,9 @@ const NewGame: NextPage = () => {
   //   const settings = JSON.parse(
   //     localStorage.getItem("gameSettings") || "{}"
   //   ) as Settings;
+  const [gameState, setGameState] = React.useState<GameState>(
+    GameState.Started
+  );
   const [gameTokens, setGameTokens] = React.useState<Token[]>(initialBoard);
   const [revealed, setRevealed] = React.useState<Token[]>([]);
   const [gameClock, setGameClock] = React.useState<number>(0);
@@ -43,14 +53,38 @@ const NewGame: NextPage = () => {
 
   //timer that counts up
   useEffect(() => {
+    if (gameState === GameState.Ended) return;
+
     const interval = setInterval(() => {
       setGameClock((prev) => prev + 1);
     }, 1000);
     return () => clearInterval(interval);
-  });
+  }, [gameState]);
+
+  useEffect(() => {
+    //Detect if the game is over
+    const numberOfFlagged = gameTokens.filter(
+      (token) => token.state === TokenState.Flagged
+    ).length;
+
+    if (numberOfFlagged === gameTokens.length) {
+      //All tokens are flagged
+      //Game is over
+      setGameState(GameState.Ended);
+    }
+  }, [gameTokens]);
+
+  useEffect(() => {
+    if (gameState === GameState.Ended) {
+      //Stop the timer
+      //clearInterval(gameClock);
+      setIsOpen(true);
+    }
+  }, [gameState, gameClock]);
 
   useEffect(() => {
     if (revealed.length === 2) {
+      // Check if the two tokens match
       if (revealed[0].value === revealed[1].value) {
         setGameTokens((prev) =>
           prev.map((token) => {
@@ -75,6 +109,7 @@ const NewGame: NextPage = () => {
       return setRevealed([]);
     }
   }, [revealed]);
+
   function onTokenClick(token: Token) {
     setMoves(moves + 1);
     if (token.state === TokenState.Hidden) {
@@ -86,10 +121,16 @@ const NewGame: NextPage = () => {
       );
     }
   }
+  let [isOpen, setIsOpen] = React.useState(false);
 
-  //   const interval = setInterval(() => {
-  //     setGameClock((prev) => prev + 1);
-  //   }, 1000);
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
   return (
     <div className="">
       <Head>
@@ -125,6 +166,10 @@ const NewGame: NextPage = () => {
                 onClick={() => {
                   onTokenClick(token);
                 }}
+                disabled={
+                  token.state === TokenState.Flagged ||
+                  gameState === GameState.PauseSelecting
+                }
               >
                 <span
                   className={`${
@@ -156,6 +201,88 @@ const NewGame: NextPage = () => {
           </div>
         </div>
       </main>
+      {/* Dialog */}
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeModal}
+        >
+          <div className="min-h-screen px-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0 bg-black/50" />
+            </Transition.Child>
+
+            {/* This element is to trick the browser into centering the modal contents. */}
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-primary-shade shadow-xl rounded-2xl">
+                <Dialog.Title
+                  as="h3"
+                  className="text-lg font-medium leading-6 text-quaternary"
+                >
+                  You did it!
+                </Dialog.Title>
+                <div className="mt-2">
+                  <p className="text-sm text-secondary-shade">
+                    Game over! Here’s how you got on…
+                  </p>
+                </div>
+
+                <div className="mt-2">
+                  <p>Time Elapsed</p>
+                  <p>
+                    {new Date(gameClock * 1000).toISOString().substr(14, 5)}
+                  </p>
+                </div>
+
+                <div className="mt-2">
+                  <p>Moves Taken</p>
+                  <p>{moves} Moves</p>
+                </div>
+
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={closeModal}
+                  >
+                    Restart
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-secondary text-black"
+                    onClick={closeModal}
+                  >
+                    Setup New Game
+                  </button>
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 };

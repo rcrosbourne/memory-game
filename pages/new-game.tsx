@@ -1,6 +1,7 @@
 import { Transition, Dialog } from "@headlessui/react";
 import { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React, { Fragment, useEffect } from "react";
 import { Settings } from ".";
 
@@ -50,6 +51,7 @@ const NewGame: NextPage = () => {
   const [revealed, setRevealed] = React.useState<Token[]>([]);
   const [gameClock, setGameClock] = React.useState<number>(0);
   const [moves, setMoves] = React.useState<number>(0);
+  const router = useRouter();
 
   //timer that counts up
   useEffect(() => {
@@ -131,6 +133,18 @@ const NewGame: NextPage = () => {
     setIsOpen(true);
   }
 
+  function setupNewGame() {
+    router.push("/");
+  }
+  function restartGame() {
+    setGameState(GameState.Started);
+    setGameClock(0);
+    setMoves(0);
+    setGameTokens(initialBoard);
+    setRevealed([]);
+    closeModal();
+  }
+
   return (
     <div className="">
       <Head>
@@ -167,6 +181,7 @@ const NewGame: NextPage = () => {
                   onTokenClick(token);
                 }}
                 disabled={
+                  token.state === TokenState.Revealed ||
                   token.state === TokenState.Flagged ||
                   gameState === GameState.PauseSelecting
                 }
@@ -240,40 +255,46 @@ const NewGame: NextPage = () => {
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-primary-shade shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-quaternary"
+                  className="text-2xl font-bold leading-8 text-center text-quaternary"
                 >
                   You did it!
                 </Dialog.Title>
-                <div className="mt-2">
+                <div className="mt-2 w-full text-center">
                   <p className="text-sm text-secondary-shade">
                     Game over! Here’s how you got on…
                   </p>
                 </div>
 
-                <div className="mt-2">
-                  <p>Time Elapsed</p>
-                  <p>
+                <div className="mt-6 bg-quinary-shade py-3 px-4 rounded-md grid grid-cols-2">
+                  <p className="text-secondary-shade font-bold text-sm">
+                    Time Elapsed
+                  </p>
+                  <p className="place-self-end font-bold text-teritiary text-xl">
                     {new Date(gameClock * 1000).toISOString().substr(14, 5)}
                   </p>
                 </div>
 
-                <div className="mt-2">
-                  <p>Moves Taken</p>
-                  <p>{moves} Moves</p>
+                <div className="mt-2 bg-quinary-shade py-3 px-4 rounded-md grid grid-cols-2">
+                  <p className="text-secondary-shade font-bold text-sm">
+                    Moves Taken
+                  </p>
+                  <p className="place-self-end font-bold text-teritiary text-xl">
+                    {moves} Moves
+                  </p>
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-8">
                   <button
                     type="button"
-                    className="btn-primary"
-                    onClick={closeModal}
+                    className="btn-primary w-full py-3 font-bold text-lg"
+                    onClick={restartGame}
                   >
                     Restart
                   </button>
                   <button
                     type="button"
-                    className="btn-secondary text-black"
-                    onClick={closeModal}
+                    className="btn-secondary w-full mt-4 text-teritiary font-bold text-lg bg-quinary-shade py-3"
+                    onClick={setupNewGame}
                   >
                     Setup New Game
                   </button>

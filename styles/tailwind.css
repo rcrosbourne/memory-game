@@ -604,6 +604,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1rem;
 }
 
+.mt-6{
+  margin-top: 1.5rem;
+}
+
+.mt-8{
+  margin-top: 2rem;
+}
+
 .block{
   display: block;
 }
@@ -710,6 +718,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .gap-y-8{
   row-gap: 2rem;
+}
+
+.place-self-start{
+  place-self: start;
 }
 
 .place-self-end{
@@ -867,6 +879,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .leading-6{
   line-height: 1.5rem;
+}
+
+.leading-8{
+  line-height: 2rem;
 }
 
 .text-primary-shade{

@@ -43,7 +43,7 @@ interface Token {
   value: number;
   id: number;
 }
-const initialBoard: Token[] = shuffle([
+const initialBoard: Token[] = [
   { state: TokenState.Hidden, value: 1, id: 1 },
   { state: TokenState.Hidden, value: 2, id: 2 },
   { state: TokenState.Hidden, value: 3, id: 3 },
@@ -60,7 +60,7 @@ const initialBoard: Token[] = shuffle([
   { state: TokenState.Hidden, value: 6, id: 14 },
   { state: TokenState.Hidden, value: 7, id: 15 },
   { state: TokenState.Hidden, value: 8, id: 16 },
-]);
+];
 
 const NewGame: NextPage = () => {
   const [gameState, setGameState] = React.useState<GameState>(
@@ -76,6 +76,9 @@ const NewGame: NextPage = () => {
   let [isGameModalOpen, setGameModalOpen] = React.useState(false);
   let [isMenuModalOpen, setMenuModalOpen] = React.useState(false);
 
+  useEffect(() => {
+    setGameTokens(shuffle(initialBoard));
+  }, []);
   //timer that counts up
   useEffect(() => {
     if (gameState === GameState.Ended || gameState === GameState.Paused) return;

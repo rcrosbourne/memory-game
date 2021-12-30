@@ -644,6 +644,22 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 100vh;
 }
 
+.h-4{
+  height: 1rem;
+}
+
+.h-14{
+  height: 3.5rem;
+}
+
+.h-12{
+  height: 3rem;
+}
+
+.h-8{
+  height: 2rem;
+}
+
 .max-h-\[70px\]{
   max-height: 70px;
 }
@@ -658,6 +674,22 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-16{
   width: 4rem;
+}
+
+.w-4{
+  width: 1rem;
+}
+
+.w-14{
+  width: 3.5rem;
+}
+
+.w-12{
+  width: 3rem;
+}
+
+.w-8{
+  width: 2rem;
 }
 
 .min-w-\[134px\]{
@@ -700,6 +732,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.place-content-center{
+  place-content: center;
+}
+
 .place-items-center{
   place-items: center;
 }
@@ -726,6 +766,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .place-self-end{
   place-self: end;
+}
+
+.place-self-center{
+  place-self: center;
 }
 
 .overflow-hidden{
@@ -797,6 +841,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .p-6{
   padding: 1.5rem;
+}
+
+.p-2{
+  padding: 0.5rem;
+}
+
+.p-4{
+  padding: 1rem;
+}
+
+.p-3{
+  padding: 0.75rem;
 }
 
 .px-6{

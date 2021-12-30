@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Transition, Dialog } from "@headlessui/react";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -6,7 +7,7 @@ import React, { Fragment, useEffect } from "react";
 import { Settings } from ".";
 
 // Based on Fisher-Yates shuffle
-//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffle(inputArray: Token[]): Token[] {
   let currentIndex = inputArray.length,
     randomIndex;
@@ -40,29 +41,50 @@ enum GameState {
 }
 interface Token {
   state: TokenState;
-  value: number;
+  value: number | string;
+  isIcon?: boolean;
   id: number;
 }
 const initialBoard: Token[] = [
-  { state: TokenState.Hidden, value: 1, id: 1 },
-  { state: TokenState.Hidden, value: 2, id: 2 },
-  { state: TokenState.Hidden, value: 3, id: 3 },
-  { state: TokenState.Hidden, value: 4, id: 4 },
-  { state: TokenState.Hidden, value: 5, id: 5 },
-  { state: TokenState.Hidden, value: 6, id: 6 },
-  { state: TokenState.Hidden, value: 7, id: 7 },
-  { state: TokenState.Hidden, value: 8, id: 8 },
-  { state: TokenState.Hidden, value: 1, id: 9 },
-  { state: TokenState.Hidden, value: 2, id: 10 },
-  { state: TokenState.Hidden, value: 3, id: 11 },
-  { state: TokenState.Hidden, value: 4, id: 12 },
-  { state: TokenState.Hidden, value: 5, id: 13 },
-  { state: TokenState.Hidden, value: 6, id: 14 },
-  { state: TokenState.Hidden, value: 7, id: 15 },
-  { state: TokenState.Hidden, value: 8, id: 16 },
+  { state: TokenState.Hidden, value: 1, isIcon: false, id: 1 },
+  { state: TokenState.Hidden, value: 2, isIcon: false, id: 2 },
+  { state: TokenState.Hidden, value: 3, isIcon: false, id: 3 },
+  { state: TokenState.Hidden, value: 4, isIcon: false, id: 4 },
+  { state: TokenState.Hidden, value: 5, isIcon: false, id: 5 },
+  { state: TokenState.Hidden, value: 6, isIcon: false, id: 6 },
+  { state: TokenState.Hidden, value: 7, isIcon: false, id: 7 },
+  { state: TokenState.Hidden, value: 8, isIcon: false, id: 8 },
+  { state: TokenState.Hidden, value: 1, isIcon: false, id: 9 },
+  { state: TokenState.Hidden, value: 2, isIcon: false, id: 10 },
+  { state: TokenState.Hidden, value: 3, isIcon: false, id: 11 },
+  { state: TokenState.Hidden, value: 4, isIcon: false, id: 12 },
+  { state: TokenState.Hidden, value: 5, isIcon: false, id: 13 },
+  { state: TokenState.Hidden, value: 6, isIcon: false, id: 14 },
+  { state: TokenState.Hidden, value: 7, isIcon: false, id: 15 },
+  { state: TokenState.Hidden, value: 8, isIcon: false, id: 16 },
+];
+
+const initialBoardWithIcons: Token[] = [
+  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 1 },
+  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 2 },
+  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 3 },
+  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 4 },
+  { state: TokenState.Hidden, value: "car", isIcon: true, id: 5 },
+  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 6 },
+  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 7 },
+  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 8 },
+  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 9 },
+  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 10 },
+  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 11 },
+  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 12 },
+  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 13 },
+  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 14 },
+  { state: TokenState.Hidden, value: "car", isIcon: true, id: 15 },
+  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 16 },
 ];
 
 const NewGame: NextPage = () => {
+  const [settings, setSettings] = React.useState<Settings>({} as Settings);
   const [gameState, setGameState] = React.useState<GameState>(
     GameState.Started
   );
@@ -76,8 +98,10 @@ const NewGame: NextPage = () => {
   let [isGameModalOpen, setGameModalOpen] = React.useState(false);
   let [isMenuModalOpen, setMenuModalOpen] = React.useState(false);
 
+  // Shuffle Tokens
   useEffect(() => {
     setGameTokens(shuffle(initialBoard));
+    //     setGameTokens(shuffle(initialBoardWithIcons));
   }, []);
   //timer that counts up
   useEffect(() => {
@@ -205,34 +229,62 @@ const NewGame: NextPage = () => {
           </div>
           {/* Game board */}
           <div className="grid grid-cols-4 gap-3 mt-20">
-            {gameTokens.map((token) => (
-              <button
-                className={`${
-                  token.state === TokenState.Revealed
-                    ? "bg-primary"
-                    : token.state === TokenState.Hidden
-                    ? "bg-teritiary"
-                    : "bg-secondary"
-                } h-16 w-16 rounded-full text-quaternary-shade font-bold`}
-                key={token.id}
-                onClick={() => {
-                  onTokenClick(token);
-                }}
-                disabled={
-                  token.state === TokenState.Revealed ||
-                  token.state === TokenState.Flagged ||
-                  gameState === GameState.PauseSelecting
-                }
-              >
-                <span
+            {gameTokens.map((token) =>
+              token.isIcon ? (
+                <button
+                  key={token.id}
                   className={`${
-                    token.state === TokenState.Hidden ? "hidden" : "block"
-                  } text-4xl font-bold`}
+                    token.state === TokenState.Revealed
+                      ? "bg-primary"
+                      : token.state === TokenState.Hidden
+                      ? "bg-teritiary"
+                      : "bg-secondary"
+                  } h-16 w-16 rounded-full text-quaternary-shade font-bold grid grid-cols-1`}
+                  onClick={() => {
+                    onTokenClick(token);
+                  }}
+                  disabled={
+                    token.state === TokenState.Revealed ||
+                    token.state === TokenState.Flagged ||
+                    gameState === GameState.PauseSelecting
+                  }
                 >
-                  {token.value}
-                </span>
-              </button>
-            ))}
+                  <FontAwesomeIcon
+                    icon={token.value}
+                    className={`${
+                      token.state === TokenState.Hidden ? "hidden" : "block"
+                    } h-8 w-8 place-self-center`}
+                  />
+                </button>
+              ) : (
+                <button
+                  className={`${
+                    token.state === TokenState.Revealed
+                      ? "bg-primary"
+                      : token.state === TokenState.Hidden
+                      ? "bg-teritiary"
+                      : "bg-secondary"
+                  } h-16 w-16 rounded-full text-quaternary-shade font-bold`}
+                  key={token.id}
+                  onClick={() => {
+                    onTokenClick(token);
+                  }}
+                  disabled={
+                    token.state === TokenState.Revealed ||
+                    token.state === TokenState.Flagged ||
+                    gameState === GameState.PauseSelecting
+                  }
+                >
+                  <span
+                    className={`${
+                      token.state === TokenState.Hidden ? "hidden" : "block"
+                    } text-4xl font-bold`}
+                  >
+                    {token.value}
+                  </span>
+                </button>
+              )
+            )}
           </div>
         </div>
         <div className="grid grid-cols-2 mt-24 gap-8 max-h-[70px]">
@@ -335,7 +387,7 @@ const NewGame: NextPage = () => {
                     className="btn-secondary w-full mt-4 text-teritiary font-bold text-lg bg-quinary-shade py-3"
                     onClick={setupNewGame}
                   >
-                    Setup New Game
+                    New Game
                   </button>
                 </div>
               </div>

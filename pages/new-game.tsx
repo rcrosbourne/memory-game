@@ -100,8 +100,8 @@ const NewGame: NextPage = () => {
 
   // Shuffle Tokens
   useEffect(() => {
-    setGameTokens(shuffle(initialBoard));
-    //     setGameTokens(shuffle(initialBoardWithIcons));
+    //     setGameTokens(shuffle(initialBoard));
+    setGameTokens(shuffle(initialBoardWithIcons));
   }, []);
   //timer that counts up
   useEffect(() => {

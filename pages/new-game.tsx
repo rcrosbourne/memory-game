@@ -155,6 +155,7 @@ const NewGame: NextPage = () => {
     setGameTokens(initialBoard);
     setRevealed([]);
     setGameModalOpen(false);
+    setMenuModalOpen(false);
   }
 
   return (

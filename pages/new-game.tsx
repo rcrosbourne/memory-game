@@ -40,14 +40,34 @@ const initialBoard: Token[] = [
   { state: TokenState.Hidden, value: 8, id: 16 },
 ];
 
+// Based on Fisher-Yates shuffle
+//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffle(inputArray: Token[]): Token[] {
+  let currentIndex = inputArray.length,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [inputArray[currentIndex], inputArray[randomIndex]] = [
+      inputArray[randomIndex],
+      inputArray[currentIndex],
+    ];
+  }
+
+  return inputArray;
+}
 const NewGame: NextPage = () => {
-  //   const settings = JSON.parse(
-  //     localStorage.getItem("gameSettings") || "{}"
-  //   ) as Settings;
   const [gameState, setGameState] = React.useState<GameState>(
     GameState.Started
   );
-  const [gameTokens, setGameTokens] = React.useState<Token[]>(initialBoard);
+  const [gameTokens, setGameTokens] = React.useState<Token[]>(
+    shuffle(initialBoard)
+  );
   const [revealed, setRevealed] = React.useState<Token[]>([]);
   const [gameClock, setGameClock] = React.useState<number>(0);
   const [moves, setMoves] = React.useState<number>(0);

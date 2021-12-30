@@ -1,3 +1,4 @@
+import { IconName, IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Transition, Dialog } from "@headlessui/react";
 import { NextPage } from "next";
@@ -41,27 +42,27 @@ enum GameState {
 }
 interface Token {
   state: TokenState;
-  value: number | string;
+  value: string;
   isIcon?: boolean;
   id: number;
 }
 const initialBoard: Token[] = [
-  { state: TokenState.Hidden, value: 1, isIcon: false, id: 1 },
-  { state: TokenState.Hidden, value: 2, isIcon: false, id: 2 },
-  { state: TokenState.Hidden, value: 3, isIcon: false, id: 3 },
-  { state: TokenState.Hidden, value: 4, isIcon: false, id: 4 },
-  { state: TokenState.Hidden, value: 5, isIcon: false, id: 5 },
-  { state: TokenState.Hidden, value: 6, isIcon: false, id: 6 },
-  { state: TokenState.Hidden, value: 7, isIcon: false, id: 7 },
-  { state: TokenState.Hidden, value: 8, isIcon: false, id: 8 },
-  { state: TokenState.Hidden, value: 1, isIcon: false, id: 9 },
-  { state: TokenState.Hidden, value: 2, isIcon: false, id: 10 },
-  { state: TokenState.Hidden, value: 3, isIcon: false, id: 11 },
-  { state: TokenState.Hidden, value: 4, isIcon: false, id: 12 },
-  { state: TokenState.Hidden, value: 5, isIcon: false, id: 13 },
-  { state: TokenState.Hidden, value: 6, isIcon: false, id: 14 },
-  { state: TokenState.Hidden, value: 7, isIcon: false, id: 15 },
-  { state: TokenState.Hidden, value: 8, isIcon: false, id: 16 },
+  { state: TokenState.Hidden, value: "1", isIcon: false, id: 1 },
+  { state: TokenState.Hidden, value: "2", isIcon: false, id: 2 },
+  { state: TokenState.Hidden, value: "3", isIcon: false, id: 3 },
+  { state: TokenState.Hidden, value: "4", isIcon: false, id: 4 },
+  { state: TokenState.Hidden, value: "5", isIcon: false, id: 5 },
+  { state: TokenState.Hidden, value: "6", isIcon: false, id: 6 },
+  { state: TokenState.Hidden, value: "7", isIcon: false, id: 7 },
+  { state: TokenState.Hidden, value: "8", isIcon: false, id: 8 },
+  { state: TokenState.Hidden, value: "1", isIcon: false, id: 9 },
+  { state: TokenState.Hidden, value: "2", isIcon: false, id: 10 },
+  { state: TokenState.Hidden, value: "3", isIcon: false, id: 11 },
+  { state: TokenState.Hidden, value: "4", isIcon: false, id: 12 },
+  { state: TokenState.Hidden, value: "5", isIcon: false, id: 13 },
+  { state: TokenState.Hidden, value: "6", isIcon: false, id: 14 },
+  { state: TokenState.Hidden, value: "7", isIcon: false, id: 15 },
+  { state: TokenState.Hidden, value: "8", isIcon: false, id: 16 },
 ];
 
 const initialBoardWithIcons: Token[] = [
@@ -250,7 +251,7 @@ const NewGame: NextPage = () => {
                   }
                 >
                   <FontAwesomeIcon
-                    icon={token.value}
+                    icon={token.value as IconName}
                     className={`${
                       token.state === TokenState.Hidden ? "hidden" : "block"
                     } h-8 w-8 place-self-center`}

@@ -172,7 +172,7 @@ const NewGame: NextPage = () => {
     setGameState(GameState.Started);
     setGameClock(0);
     setMoves(0);
-    setGameTokens(initialBoard);
+    setGameTokens(shuffle(initialBoard));
     setRevealed([]);
     setGameModalOpen(false);
     setMenuModalOpen(false);

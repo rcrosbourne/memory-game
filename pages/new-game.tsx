@@ -53,9 +53,13 @@ const NewGame: NextPage = () => {
   const [moves, setMoves] = React.useState<number>(0);
   const router = useRouter();
 
+  //   Modals
+  let [isGameModalOpen, setGameModalOpen] = React.useState(false);
+  let [isMenuModalOpen, setMenuModalOpen] = React.useState(false);
+
   //timer that counts up
   useEffect(() => {
-    if (gameState === GameState.Ended) return;
+    if (gameState === GameState.Ended || gameState === GameState.Paused) return;
 
     const interval = setInterval(() => {
       setGameClock((prev) => prev + 1);
@@ -80,7 +84,7 @@ const NewGame: NextPage = () => {
     if (gameState === GameState.Ended) {
       //Stop the timer
       //clearInterval(gameClock);
-      setIsOpen(true);
+      setGameModalOpen(true);
     }
   }, [gameState, gameClock]);
 
@@ -123,14 +127,22 @@ const NewGame: NextPage = () => {
       );
     }
   }
-  let [isOpen, setIsOpen] = React.useState(false);
 
   function closeModal() {
-    setIsOpen(false);
+    //     setGameModalOpen(false);
   }
 
   function openModal() {
-    setIsOpen(true);
+    setGameModalOpen(true);
+  }
+  function openMenuModal() {
+    //Pause the game
+    setGameState(GameState.Paused);
+    setMenuModalOpen(true);
+  }
+  function closeMenuModal() {
+    setGameState(GameState.Started);
+    setMenuModalOpen(false);
   }
 
   function setupNewGame() {
@@ -142,7 +154,7 @@ const NewGame: NextPage = () => {
     setMoves(0);
     setGameTokens(initialBoard);
     setRevealed([]);
-    closeModal();
+    setGameModalOpen(false);
   }
 
   return (
@@ -161,7 +173,10 @@ const NewGame: NextPage = () => {
           {/* Top Menu */}
           <div className="grid grid-cols-2 place-items-center">
             <h2 className="w-full text-left text-2xl font-bold">memory</h2>
-            <button className="btn-primary py-2 px-4 place-self-end">
+            <button
+              className="btn-primary py-2 px-4 place-self-end"
+              onClick={openMenuModal}
+            >
               Menu
             </button>
           </div>
@@ -216,12 +231,13 @@ const NewGame: NextPage = () => {
           </div>
         </div>
       </main>
-      {/* Dialog */}
-      <Transition appear show={isOpen} as={Fragment}>
+      {/* Game winning Modal */}
+      <Transition appear show={isGameModalOpen} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModal}
+          // We will not close the modal when the user clicks outside
+          onClose={() => {}}
         >
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
@@ -297,6 +313,71 @@ const NewGame: NextPage = () => {
                     onClick={setupNewGame}
                   >
                     Setup New Game
+                  </button>
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
+      {/* Menu Modal */}
+      <Transition appear show={isMenuModalOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeMenuModal}
+        >
+          <div className="min-h-screen px-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0 bg-black/50" />
+            </Transition.Child>
+
+            {/* This element is to trick the browser into centering the modal contents. */}
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-primary-shade shadow-xl rounded-2xl">
+                <div className="">
+                  <button
+                    type="button"
+                    className="btn-primary w-full py-3 font-bold text-lg"
+                    onClick={restartGame}
+                  >
+                    Restart
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-secondary w-full mt-4 text-teritiary font-bold text-lg bg-quinary-shade py-3"
+                    onClick={setupNewGame}
+                  >
+                    New Game
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-secondary w-full mt-4 text-teritiary font-bold text-lg bg-quinary-shade py-3"
+                    onClick={closeMenuModal}
+                  >
+                    Resume Game
                   </button>
                 </div>
               </div>

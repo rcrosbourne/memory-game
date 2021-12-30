@@ -5,41 +5,6 @@ import { useRouter } from "next/router";
 import React, { Fragment, useEffect } from "react";
 import { Settings } from ".";
 
-enum TokenState {
-  Hidden,
-  Revealed,
-  Flagged,
-}
-enum GameState {
-  Started,
-  Ended,
-  Paused,
-  PauseSelecting,
-}
-interface Token {
-  state: TokenState;
-  value: number;
-  id: number;
-}
-const initialBoard: Token[] = [
-  { state: TokenState.Hidden, value: 1, id: 1 },
-  { state: TokenState.Hidden, value: 2, id: 2 },
-  { state: TokenState.Hidden, value: 3, id: 3 },
-  { state: TokenState.Hidden, value: 4, id: 4 },
-  { state: TokenState.Hidden, value: 5, id: 5 },
-  { state: TokenState.Hidden, value: 6, id: 6 },
-  { state: TokenState.Hidden, value: 7, id: 7 },
-  { state: TokenState.Hidden, value: 8, id: 8 },
-  { state: TokenState.Hidden, value: 1, id: 9 },
-  { state: TokenState.Hidden, value: 2, id: 10 },
-  { state: TokenState.Hidden, value: 3, id: 11 },
-  { state: TokenState.Hidden, value: 4, id: 12 },
-  { state: TokenState.Hidden, value: 5, id: 13 },
-  { state: TokenState.Hidden, value: 6, id: 14 },
-  { state: TokenState.Hidden, value: 7, id: 15 },
-  { state: TokenState.Hidden, value: 8, id: 16 },
-];
-
 // Based on Fisher-Yates shuffle
 //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffle(inputArray: Token[]): Token[] {
@@ -61,13 +26,47 @@ function shuffle(inputArray: Token[]): Token[] {
 
   return inputArray;
 }
+
+enum TokenState {
+  Hidden,
+  Revealed,
+  Flagged,
+}
+enum GameState {
+  Started,
+  Ended,
+  Paused,
+  PauseSelecting,
+}
+interface Token {
+  state: TokenState;
+  value: number;
+  id: number;
+}
+const initialBoard: Token[] = shuffle([
+  { state: TokenState.Hidden, value: 1, id: 1 },
+  { state: TokenState.Hidden, value: 2, id: 2 },
+  { state: TokenState.Hidden, value: 3, id: 3 },
+  { state: TokenState.Hidden, value: 4, id: 4 },
+  { state: TokenState.Hidden, value: 5, id: 5 },
+  { state: TokenState.Hidden, value: 6, id: 6 },
+  { state: TokenState.Hidden, value: 7, id: 7 },
+  { state: TokenState.Hidden, value: 8, id: 8 },
+  { state: TokenState.Hidden, value: 1, id: 9 },
+  { state: TokenState.Hidden, value: 2, id: 10 },
+  { state: TokenState.Hidden, value: 3, id: 11 },
+  { state: TokenState.Hidden, value: 4, id: 12 },
+  { state: TokenState.Hidden, value: 5, id: 13 },
+  { state: TokenState.Hidden, value: 6, id: 14 },
+  { state: TokenState.Hidden, value: 7, id: 15 },
+  { state: TokenState.Hidden, value: 8, id: 16 },
+]);
+
 const NewGame: NextPage = () => {
   const [gameState, setGameState] = React.useState<GameState>(
     GameState.Started
   );
-  const [gameTokens, setGameTokens] = React.useState<Token[]>(
-    shuffle(initialBoard)
-  );
+  const [gameTokens, setGameTokens] = React.useState<Token[]>(initialBoard);
   const [revealed, setRevealed] = React.useState<Token[]>([]);
   const [gameClock, setGameClock] = React.useState<number>(0);
   const [moves, setMoves] = React.useState<number>(0);

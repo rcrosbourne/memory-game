@@ -8,6 +8,7 @@ import { useAppContext } from "../context/state";
 import {
   initial4x4BoardWithIcons,
   initial4x4BoardWithNumbers,
+  initial6x6BoardWithIcons,
   initial6x6BoardWithNumbers,
 } from "../data/boards";
 import {
@@ -40,7 +41,11 @@ const NewGame: NextPage = () => {
   // Shuffle Tokens
   useEffect(() => {
     if (appContext.settings.theme === ICONS) {
-      setGameTokens(shuffle(initial4x4BoardWithIcons));
+      if (appContext.settings.gridSize === FOUR_BY_FOUR) {
+        setGameTokens(shuffle(initial4x4BoardWithIcons));
+      } else {
+        setGameTokens(shuffle(initial6x6BoardWithIcons));
+      }
     } else {
       if (appContext.settings.gridSize === FOUR_BY_FOUR) {
         setGameTokens(shuffle(initial4x4BoardWithNumbers));

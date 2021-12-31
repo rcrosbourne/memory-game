@@ -12,6 +12,16 @@ import {
   faSnowflake,
   faLiraSign,
   faCar,
+  faBlind,
+  faCannabis,
+  faBriefcaseMedical,
+  faCrow,
+  faCrown,
+  faDollarSign,
+  faDiceFive,
+  faDiceSix,
+  faFish,
+  faSpaceShuttle,
 } from "@fortawesome/free-solid-svg-icons";
 import { AppContextProvider } from "../context/state";
 
@@ -25,7 +35,17 @@ library.add(
   faMoon,
   faSnowflake,
   faLiraSign,
-  faCar
+  faCar,
+  faBlind,
+  faCannabis,
+  faBriefcaseMedical,
+  faCrow,
+  faCrown,
+  faDollarSign,
+  faDiceFive,
+  faDiceSix,
+  faFish,
+  faSpaceShuttle
 );
 function MyApp({ Component, pageProps }: AppProps) {
   return (

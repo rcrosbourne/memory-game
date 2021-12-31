@@ -48,7 +48,7 @@ const NewGame: NextPage = () => {
         setGameTokens(shuffle(initial6x6BoardWithNumbers));
       }
     }
-  }, [appContext.settings.theme]);
+  }, [appContext.settings.gridSize, appContext.settings.theme]);
 
   //timer that counts up
   useEffect(() => {

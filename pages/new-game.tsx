@@ -1,11 +1,11 @@
-import { IconName, IconProp } from "@fortawesome/fontawesome-svg-core";
+import { IconName } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Transition, Dialog } from "@headlessui/react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect } from "react";
-import { Settings } from ".";
+import { useAppContext } from "../context/state";
 
 // Based on Fisher-Yates shuffle
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -66,26 +66,26 @@ const initialBoard: Token[] = [
 ];
 
 const initialBoardWithIcons: Token[] = [
-  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 1 },
-  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 2 },
-  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 3 },
-  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 4 },
-  { state: TokenState.Hidden, value: "car", isIcon: true, id: 5 },
-  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 6 },
-  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 7 },
-  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 8 },
-  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 9 },
-  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 10 },
-  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 11 },
-  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 12 },
-  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 13 },
-  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 14 },
-  { state: TokenState.Hidden, value: "car", isIcon: true, id: 15 },
-  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 16 },
+  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 17 },
+  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 18 },
+  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 19 },
+  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 20 },
+  { state: TokenState.Hidden, value: "car", isIcon: true, id: 21 },
+  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 22 },
+  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 23 },
+  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 24 },
+  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 25 },
+  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 26 },
+  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 27 },
+  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 28 },
+  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 29 },
+  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 30 },
+  { state: TokenState.Hidden, value: "car", isIcon: true, id: 31 },
+  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 32 },
 ];
 
 const NewGame: NextPage = () => {
-  const [settings, setSettings] = React.useState<Settings>({} as Settings);
+  const appContext = useAppContext();
   const [gameState, setGameState] = React.useState<GameState>(
     GameState.Started
   );
@@ -101,9 +101,13 @@ const NewGame: NextPage = () => {
 
   // Shuffle Tokens
   useEffect(() => {
-    //     setGameTokens(shuffle(initialBoard));
-    setGameTokens(shuffle(initialBoardWithIcons));
-  }, []);
+    if (appContext.settings.theme === "Icons") {
+      setGameTokens(shuffle(initialBoardWithIcons));
+    } else {
+      setGameTokens(shuffle(initialBoard));
+    }
+  }, [appContext.settings.theme]);
+
   //timer that counts up
   useEffect(() => {
     if (gameState === GameState.Ended || gameState === GameState.Paused) return;
@@ -130,7 +134,6 @@ const NewGame: NextPage = () => {
   useEffect(() => {
     if (gameState === GameState.Ended) {
       //Stop the timer
-      //clearInterval(gameClock);
       setGameModalOpen(true);
     }
   }, [gameState, gameClock]);
@@ -175,13 +178,6 @@ const NewGame: NextPage = () => {
     }
   }
 
-  function closeModal() {
-    //     setGameModalOpen(false);
-  }
-
-  function openModal() {
-    setGameModalOpen(true);
-  }
   function openMenuModal() {
     //Pause the game
     setGameState(GameState.Paused);
@@ -199,12 +195,15 @@ const NewGame: NextPage = () => {
     setGameState(GameState.Started);
     setGameClock(0);
     setMoves(0);
-    setGameTokens(shuffle(initialBoard));
+    if (appContext.settings.theme === "Icons") {
+      setGameTokens(shuffle(initialBoardWithIcons));
+    } else {
+      setGameTokens(shuffle(initialBoard));
+    }
     setRevealed([]);
     setGameModalOpen(false);
     setMenuModalOpen(false);
   }
-
   return (
     <div className="">
       <Head>

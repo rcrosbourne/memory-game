@@ -3,9 +3,15 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
+import { useAppContext } from "../context/state";
 const menuOptions = {
   themes: ["Numbers", "Icons"],
-  numberOfPlayers: ["1", "2", "3", "4"],
+  numberOfPlayers: [
+    { label: "1", disabled: false },
+    { label: "2", disabled: true },
+    { label: "3", disabled: true },
+    { label: "4", disabled: true },
+  ],
   gridSizes: ["4x4", "6x6"],
 };
 export interface Settings {
@@ -15,14 +21,13 @@ export interface Settings {
 }
 const Home: NextPage = () => {
   const router = useRouter();
-  const [gameSettings, setGameSettings] = React.useState<Settings>({
-    theme: "Numbers",
-    numberOfPlayers: "1",
-    gridSize: "4x4",
-  });
+  const appContext = useAppContext();
+  const [gameSettings, setGameSettings] = React.useState<Settings>(
+    appContext.settings
+  );
   const saveGameSettings = () => {
-    //Save game settings to local storage
-    localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
+    //Save game settings appContext
+    appContext.setSettings(gameSettings);
     //Navigate to the game page
     router.push("/new-game");
   };
@@ -92,8 +97,8 @@ const Home: NextPage = () => {
               <div className="grid grid-cols-4 gap-3 w-full mt-3 md:gap-5">
                 {menuOptions.numberOfPlayers.map((player) => (
                   <RadioGroup.Option
-                    value={player}
-                    key={`player-${player}`}
+                    value={player.label}
+                    key={`player-${player.label}`}
                     as={React.Fragment}
                   >
                     {({ checked, active }) => (
@@ -101,8 +106,9 @@ const Home: NextPage = () => {
                         className={`${
                           checked || active ? "btn-active" : "btn-idle"
                         } btn-secondary py-3 md:text-2xl`}
+                        disabled={player.disabled}
                       >
-                        {player}
+                        {player.label}
                       </button>
                     )}
                   </RadioGroup.Option>

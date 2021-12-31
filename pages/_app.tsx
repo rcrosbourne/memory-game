@@ -13,6 +13,7 @@ import {
   faLiraSign,
   faCar,
 } from "@fortawesome/free-solid-svg-icons";
+import { AppContextProvider } from "../context/state";
 
 library.add(
   faFutbol,
@@ -27,7 +28,11 @@ library.add(
   faCar
 );
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <AppContextProvider>
+      <Component {...pageProps} />
+    </AppContextProvider>
+  );
 }
 
 export default MyApp;

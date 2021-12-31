@@ -8,8 +8,16 @@ import { useAppContext } from "../context/state";
 import {
   initial4x4BoardWithIcons,
   initial4x4BoardWithNumbers,
+  initial6x6BoardWithNumbers,
 } from "../data/boards";
-import { Token, GameState, TokenState, ICONS } from "../data/models";
+import {
+  Token,
+  GameState,
+  TokenState,
+  ICONS,
+  FOUR_BY_FOUR,
+  SIX_BY_SIX,
+} from "../data/models";
 import shuffle from "../utils/shuffle";
 
 const NewGame: NextPage = () => {
@@ -34,7 +42,11 @@ const NewGame: NextPage = () => {
     if (appContext.settings.theme === ICONS) {
       setGameTokens(shuffle(initial4x4BoardWithIcons));
     } else {
-      setGameTokens(shuffle(initial4x4BoardWithNumbers));
+      if (appContext.settings.gridSize === FOUR_BY_FOUR) {
+        setGameTokens(shuffle(initial4x4BoardWithNumbers));
+      } else {
+        setGameTokens(shuffle(initial6x6BoardWithNumbers));
+      }
     }
   }, [appContext.settings.theme]);
 
@@ -135,7 +147,7 @@ const NewGame: NextPage = () => {
     setMenuModalOpen(false);
   }
   return (
-    <div className="">
+    <div>
       <Head>
         <title>Memory Game - New Game</title>
         <meta
@@ -158,25 +170,54 @@ const NewGame: NextPage = () => {
             </button>
           </div>
           {/* Game board */}
-          <div className="grid grid-cols-4 gap-3 mt-20">
-            {gameTokens.map((token) =>
-              token.isIcon ? (
-                <IconToken
-                  key={token.id}
-                  token={token}
-                  onClick={onTokenClick}
-                  gameState={gameState}
-                />
-              ) : (
-                <NumberToken
-                  key={token.id}
-                  token={token}
-                  onClick={onTokenClick}
-                  gameState={gameState}
-                />
-              )
-            )}
-          </div>
+
+          {appContext.settings.gridSize === FOUR_BY_FOUR && (
+            <div className="grid grid-cols-4 gap-3 mt-20">
+              {gameTokens.map((token) =>
+                token.isIcon ? (
+                  <IconToken
+                    key={token.id}
+                    token={token}
+                    onClick={onTokenClick}
+                    gameState={gameState}
+                    boardSize={FOUR_BY_FOUR}
+                  />
+                ) : (
+                  <NumberToken
+                    key={token.id}
+                    token={token}
+                    onClick={onTokenClick}
+                    gameState={gameState}
+                    boardSize={FOUR_BY_FOUR}
+                  />
+                )
+              )}
+            </div>
+          )}
+          {appContext.settings.gridSize === SIX_BY_SIX && (
+            // TODO: fix this for mobile
+            <div className="grid grid-cols-6 gap-2 mt-20">
+              {gameTokens.map((token) =>
+                token.isIcon ? (
+                  <IconToken
+                    key={token.id}
+                    token={token}
+                    onClick={onTokenClick}
+                    gameState={gameState}
+                    boardSize={SIX_BY_SIX}
+                  />
+                ) : (
+                  <NumberToken
+                    key={token.id}
+                    token={token}
+                    onClick={onTokenClick}
+                    gameState={gameState}
+                    boardSize={SIX_BY_SIX}
+                  />
+                )
+              )}
+            </div>
+          )}
         </div>
         <div className="grid grid-cols-2 mt-24 gap-8 max-h-[70px]">
           <div className="bg-quinary-shade rounded-md grid py-2 px-8">

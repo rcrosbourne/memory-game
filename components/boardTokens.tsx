@@ -1,14 +1,16 @@
 import { IconName } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { GameState, Token, TokenState } from "../data/models";
+import { FOUR_BY_FOUR, GameState, Token, TokenState } from "../data/models";
 
 export function IconToken({
   token,
   gameState,
   onClick,
+  boardSize,
 }: {
   token: Token;
   gameState: GameState;
+  boardSize: string;
   onClick: (token: Token) => void;
 }) {
   return (
@@ -20,7 +22,9 @@ export function IconToken({
           : token.state === TokenState.Hidden
           ? "bg-teritiary"
           : "bg-secondary"
-      } h-16 w-16 rounded-full text-quaternary-shade font-bold grid grid-cols-1`}
+      } ${
+        boardSize === FOUR_BY_FOUR ? "h-16 w-16" : "h-10 w-10"
+      } rounded-full text-quaternary-shade font-bold grid grid-cols-1`}
       onClick={() => onClick(token)}
       disabled={
         token.state === TokenState.Revealed ||
@@ -30,9 +34,9 @@ export function IconToken({
     >
       <FontAwesomeIcon
         icon={token.value as IconName}
-        className={`${
-          token.state === TokenState.Hidden ? "hidden" : "block"
-        } h-8 w-8 place-self-center`}
+        className={`${token.state === TokenState.Hidden ? "hidden" : "block"} ${
+          boardSize === FOUR_BY_FOUR ? "h-8 w-8" : "h-6 w-6"
+        } place-self-center`}
       />
     </button>
   );
@@ -40,10 +44,12 @@ export function IconToken({
 export function NumberToken({
   token,
   gameState,
+  boardSize,
   onClick,
 }: {
   token: Token;
   gameState: GameState;
+  boardSize: string;
   onClick: (token: Token) => void;
 }) {
   return (
@@ -54,7 +60,9 @@ export function NumberToken({
           : token.state === TokenState.Hidden
           ? "bg-teritiary"
           : "bg-secondary"
-      } h-16 w-16 rounded-full text-quaternary-shade font-bold`}
+      } ${
+        boardSize === FOUR_BY_FOUR ? "h-16 w-16" : "h-10 w-10"
+      } rounded-full text-quaternary-shade font-bold`}
       key={token.id}
       onClick={() => onClick(token)}
       disabled={
@@ -64,9 +72,9 @@ export function NumberToken({
       }
     >
       <span
-        className={`${
-          token.state === TokenState.Hidden ? "hidden" : "block"
-        } text-4xl font-bold`}
+        className={`${token.state === TokenState.Hidden ? "hidden" : "block"} ${
+          boardSize === FOUR_BY_FOUR ? "text-4xl" : "text-2xl"
+        } font-bold`}
       >
         {token.value}
       </span>

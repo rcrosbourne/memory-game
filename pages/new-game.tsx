@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { Settings } from ".";
 import { IconToken, NumberToken } from "../components/boardTokens";
 import { MobileGameMenu, WinGame } from "../components/modals";
 import { useAppContext } from "../context/state";
@@ -40,20 +41,8 @@ const NewGame: NextPage = () => {
 
   // Shuffle Tokens
   useEffect(() => {
-    if (appContext.settings.theme === ICONS) {
-      if (appContext.settings.gridSize === FOUR_BY_FOUR) {
-        setGameTokens(shuffle(initial4x4BoardWithIcons));
-      } else {
-        setGameTokens(shuffle(initial6x6BoardWithIcons));
-      }
-    } else {
-      if (appContext.settings.gridSize === FOUR_BY_FOUR) {
-        setGameTokens(shuffle(initial4x4BoardWithNumbers));
-      } else {
-        setGameTokens(shuffle(initial6x6BoardWithNumbers));
-      }
-    }
-  }, [appContext.settings.gridSize, appContext.settings.theme]);
+    setupBoard(appContext.settings);
+  }, [appContext.settings]);
 
   //timer that counts up
   useEffect(() => {
@@ -142,14 +131,26 @@ const NewGame: NextPage = () => {
     setGameState(GameState.Started);
     setGameClock(0);
     setMoves(0);
-    if (appContext.settings.theme === "Icons") {
-      setGameTokens(shuffle(initial4x4BoardWithIcons));
-    } else {
-      setGameTokens(shuffle(initial4x4BoardWithNumbers));
-    }
+    setupBoard(appContext.settings);
     setRevealed([]);
     setGameModalOpen(false);
     setMenuModalOpen(false);
+  }
+
+  function setupBoard(settings: Settings): void {
+    if (settings.theme === ICONS) {
+      if (settings.gridSize === FOUR_BY_FOUR) {
+        setGameTokens(shuffle(initial4x4BoardWithIcons));
+      } else {
+        setGameTokens(shuffle(initial6x6BoardWithIcons));
+      }
+    } else {
+      if (settings.gridSize === FOUR_BY_FOUR) {
+        setGameTokens(shuffle(initial4x4BoardWithNumbers));
+      } else {
+        setGameTokens(shuffle(initial6x6BoardWithNumbers));
+      }
+    }
   }
   return (
     <div>

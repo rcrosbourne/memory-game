@@ -1,95 +1,25 @@
-import { IconName } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Transition, Dialog } from "@headlessui/react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
+import { IconToken, NumberToken } from "../components/boardTokens";
+import { MobileGameMenu, WinGame } from "../components/modals";
 import { useAppContext } from "../context/state";
-
-// Based on Fisher-Yates shuffle
-// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-function shuffle(inputArray: Token[]): Token[] {
-  let currentIndex = inputArray.length,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [inputArray[currentIndex], inputArray[randomIndex]] = [
-      inputArray[randomIndex],
-      inputArray[currentIndex],
-    ];
-  }
-
-  return inputArray;
-}
-
-enum TokenState {
-  Hidden,
-  Revealed,
-  Flagged,
-}
-enum GameState {
-  Started,
-  Ended,
-  Paused,
-  PauseSelecting,
-}
-interface Token {
-  state: TokenState;
-  value: string;
-  isIcon?: boolean;
-  id: number;
-}
-const initialBoard: Token[] = [
-  { state: TokenState.Hidden, value: "1", isIcon: false, id: 1 },
-  { state: TokenState.Hidden, value: "2", isIcon: false, id: 2 },
-  { state: TokenState.Hidden, value: "3", isIcon: false, id: 3 },
-  { state: TokenState.Hidden, value: "4", isIcon: false, id: 4 },
-  { state: TokenState.Hidden, value: "5", isIcon: false, id: 5 },
-  { state: TokenState.Hidden, value: "6", isIcon: false, id: 6 },
-  { state: TokenState.Hidden, value: "7", isIcon: false, id: 7 },
-  { state: TokenState.Hidden, value: "8", isIcon: false, id: 8 },
-  { state: TokenState.Hidden, value: "1", isIcon: false, id: 9 },
-  { state: TokenState.Hidden, value: "2", isIcon: false, id: 10 },
-  { state: TokenState.Hidden, value: "3", isIcon: false, id: 11 },
-  { state: TokenState.Hidden, value: "4", isIcon: false, id: 12 },
-  { state: TokenState.Hidden, value: "5", isIcon: false, id: 13 },
-  { state: TokenState.Hidden, value: "6", isIcon: false, id: 14 },
-  { state: TokenState.Hidden, value: "7", isIcon: false, id: 15 },
-  { state: TokenState.Hidden, value: "8", isIcon: false, id: 16 },
-];
-
-const initialBoardWithIcons: Token[] = [
-  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 17 },
-  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 18 },
-  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 19 },
-  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 20 },
-  { state: TokenState.Hidden, value: "car", isIcon: true, id: 21 },
-  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 22 },
-  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 23 },
-  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 24 },
-  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 25 },
-  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 26 },
-  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 27 },
-  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 28 },
-  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 29 },
-  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 30 },
-  { state: TokenState.Hidden, value: "car", isIcon: true, id: 31 },
-  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 32 },
-];
+import {
+  initial4x4BoardWithIcons,
+  initial4x4BoardWithNumbers,
+} from "../data/boards";
+import { Token, GameState, TokenState, ICONS } from "../data/models";
+import shuffle from "../utils/shuffle";
 
 const NewGame: NextPage = () => {
   const appContext = useAppContext();
   const [gameState, setGameState] = React.useState<GameState>(
     GameState.Started
   );
-  const [gameTokens, setGameTokens] = React.useState<Token[]>(initialBoard);
+  const [gameTokens, setGameTokens] = React.useState<Token[]>(
+    initial4x4BoardWithNumbers
+  );
   const [revealed, setRevealed] = React.useState<Token[]>([]);
   const [gameClock, setGameClock] = React.useState<number>(0);
   const [moves, setMoves] = React.useState<number>(0);
@@ -101,10 +31,10 @@ const NewGame: NextPage = () => {
 
   // Shuffle Tokens
   useEffect(() => {
-    if (appContext.settings.theme === "Icons") {
-      setGameTokens(shuffle(initialBoardWithIcons));
+    if (appContext.settings.theme === ICONS) {
+      setGameTokens(shuffle(initial4x4BoardWithIcons));
     } else {
-      setGameTokens(shuffle(initialBoard));
+      setGameTokens(shuffle(initial4x4BoardWithNumbers));
     }
   }, [appContext.settings.theme]);
 
@@ -196,9 +126,9 @@ const NewGame: NextPage = () => {
     setGameClock(0);
     setMoves(0);
     if (appContext.settings.theme === "Icons") {
-      setGameTokens(shuffle(initialBoardWithIcons));
+      setGameTokens(shuffle(initial4x4BoardWithIcons));
     } else {
-      setGameTokens(shuffle(initialBoard));
+      setGameTokens(shuffle(initial4x4BoardWithNumbers));
     }
     setRevealed([]);
     setGameModalOpen(false);
@@ -231,58 +161,19 @@ const NewGame: NextPage = () => {
           <div className="grid grid-cols-4 gap-3 mt-20">
             {gameTokens.map((token) =>
               token.isIcon ? (
-                <button
+                <IconToken
                   key={token.id}
-                  className={`${
-                    token.state === TokenState.Revealed
-                      ? "bg-primary"
-                      : token.state === TokenState.Hidden
-                      ? "bg-teritiary"
-                      : "bg-secondary"
-                  } h-16 w-16 rounded-full text-quaternary-shade font-bold grid grid-cols-1`}
-                  onClick={() => {
-                    onTokenClick(token);
-                  }}
-                  disabled={
-                    token.state === TokenState.Revealed ||
-                    token.state === TokenState.Flagged ||
-                    gameState === GameState.PauseSelecting
-                  }
-                >
-                  <FontAwesomeIcon
-                    icon={token.value as IconName}
-                    className={`${
-                      token.state === TokenState.Hidden ? "hidden" : "block"
-                    } h-8 w-8 place-self-center`}
-                  />
-                </button>
+                  token={token}
+                  onClick={onTokenClick}
+                  gameState={gameState}
+                />
               ) : (
-                <button
-                  className={`${
-                    token.state === TokenState.Revealed
-                      ? "bg-primary"
-                      : token.state === TokenState.Hidden
-                      ? "bg-teritiary"
-                      : "bg-secondary"
-                  } h-16 w-16 rounded-full text-quaternary-shade font-bold`}
+                <NumberToken
                   key={token.id}
-                  onClick={() => {
-                    onTokenClick(token);
-                  }}
-                  disabled={
-                    token.state === TokenState.Revealed ||
-                    token.state === TokenState.Flagged ||
-                    gameState === GameState.PauseSelecting
-                  }
-                >
-                  <span
-                    className={`${
-                      token.state === TokenState.Hidden ? "hidden" : "block"
-                    } text-4xl font-bold`}
-                  >
-                    {token.value}
-                  </span>
-                </button>
+                  token={token}
+                  onClick={onTokenClick}
+                  gameState={gameState}
+                />
               )
             )}
           </div>
@@ -307,159 +198,21 @@ const NewGame: NextPage = () => {
         </div>
       </main>
       {/* Game winning Modal */}
-      <Transition appear show={isGameModalOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
-          // We will not close the modal when the user clicks outside
-          onClose={() => {}}
-        >
-          <div className="min-h-screen px-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-            </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. */}
-            <span
-              className="inline-block h-screen align-middle"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-primary-shade shadow-xl rounded-2xl">
-                <Dialog.Title
-                  as="h3"
-                  className="text-2xl font-bold leading-8 text-center text-quaternary"
-                >
-                  You did it!
-                </Dialog.Title>
-                <div className="mt-2 w-full text-center">
-                  <p className="text-sm text-secondary-shade">
-                    Game over! Here’s how you got on…
-                  </p>
-                </div>
-
-                <div className="mt-6 bg-quinary-shade py-3 px-4 rounded-md grid grid-cols-2">
-                  <p className="text-secondary-shade font-bold text-sm">
-                    Time Elapsed
-                  </p>
-                  <p className="place-self-end font-bold text-teritiary text-xl">
-                    {new Date(gameClock * 1000).toISOString().substr(14, 5)}
-                  </p>
-                </div>
-
-                <div className="mt-2 bg-quinary-shade py-3 px-4 rounded-md grid grid-cols-2">
-                  <p className="text-secondary-shade font-bold text-sm">
-                    Moves Taken
-                  </p>
-                  <p className="place-self-end font-bold text-teritiary text-xl">
-                    {moves} Moves
-                  </p>
-                </div>
-
-                <div className="mt-8">
-                  <button
-                    type="button"
-                    className="btn-primary w-full py-3 font-bold text-lg"
-                    onClick={restartGame}
-                  >
-                    Restart
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-secondary w-full mt-4 text-teritiary font-bold text-lg bg-quinary-shade py-3"
-                    onClick={setupNewGame}
-                  >
-                    New Game
-                  </button>
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
+      <WinGame
+        gameClock={gameClock}
+        moves={moves}
+        onClose={() => {}}
+        isGameModalOpen={isGameModalOpen}
+        restartGame={restartGame}
+        setupNewGame={setupNewGame}
+      />
       {/* Menu Modal */}
-      <Transition appear show={isMenuModalOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeMenuModal}
-        >
-          <div className="min-h-screen px-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-            </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. */}
-            <span
-              className="inline-block h-screen align-middle"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-primary-shade shadow-xl rounded-2xl">
-                <div className="">
-                  <button
-                    type="button"
-                    className="btn-primary w-full py-3 font-bold text-lg"
-                    onClick={restartGame}
-                  >
-                    Restart
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-secondary w-full mt-4 text-teritiary font-bold text-lg bg-quinary-shade py-3"
-                    onClick={setupNewGame}
-                  >
-                    New Game
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-secondary w-full mt-4 text-teritiary font-bold text-lg bg-quinary-shade py-3"
-                    onClick={closeMenuModal}
-                  >
-                    Resume Game
-                  </button>
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
+      <MobileGameMenu
+        isMenuModalOpen={isMenuModalOpen}
+        onClose={closeMenuModal}
+        restartGame={restartGame}
+        setupNewGame={setupNewGame}
+      />
     </div>
   );
 };

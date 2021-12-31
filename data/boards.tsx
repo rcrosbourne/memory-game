@@ -1,0 +1,38 @@
+import { Token, TokenState } from "./models";
+
+export const initial4x4BoardWithNumbers: Token[] = [
+  { state: TokenState.Hidden, value: "1", isIcon: false, id: 1 },
+  { state: TokenState.Hidden, value: "2", isIcon: false, id: 2 },
+  { state: TokenState.Hidden, value: "3", isIcon: false, id: 3 },
+  { state: TokenState.Hidden, value: "4", isIcon: false, id: 4 },
+  { state: TokenState.Hidden, value: "5", isIcon: false, id: 5 },
+  { state: TokenState.Hidden, value: "6", isIcon: false, id: 6 },
+  { state: TokenState.Hidden, value: "7", isIcon: false, id: 7 },
+  { state: TokenState.Hidden, value: "8", isIcon: false, id: 8 },
+  { state: TokenState.Hidden, value: "1", isIcon: false, id: 9 },
+  { state: TokenState.Hidden, value: "2", isIcon: false, id: 10 },
+  { state: TokenState.Hidden, value: "3", isIcon: false, id: 11 },
+  { state: TokenState.Hidden, value: "4", isIcon: false, id: 12 },
+  { state: TokenState.Hidden, value: "5", isIcon: false, id: 13 },
+  { state: TokenState.Hidden, value: "6", isIcon: false, id: 14 },
+  { state: TokenState.Hidden, value: "7", isIcon: false, id: 15 },
+  { state: TokenState.Hidden, value: "8", isIcon: false, id: 16 },
+];
+export const initial4x4BoardWithIcons: Token[] = [
+  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 17 },
+  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 18 },
+  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 19 },
+  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 20 },
+  { state: TokenState.Hidden, value: "car", isIcon: true, id: 21 },
+  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 22 },
+  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 23 },
+  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 24 },
+  { state: TokenState.Hidden, value: "bug", isIcon: true, id: 25 },
+  { state: TokenState.Hidden, value: "futbol", isIcon: true, id: 26 },
+  { state: TokenState.Hidden, value: "sun", isIcon: true, id: 27 },
+  { state: TokenState.Hidden, value: "flask", isIcon: true, id: 28 },
+  { state: TokenState.Hidden, value: "snowflake", isIcon: true, id: 29 },
+  { state: TokenState.Hidden, value: "lira-sign", isIcon: true, id: 30 },
+  { state: TokenState.Hidden, value: "car", isIcon: true, id: 31 },
+  { state: TokenState.Hidden, value: "moon", isIcon: true, id: 32 },
+];

@@ -46,16 +46,17 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Github Repo](https://github.com/rcrosbourne/memory-game)
+- Live Site URL: [Live](https://memory-game.rcrosbourne.dev)
 
 ## My process
 
 ### Built with
 
 - Semantic HTML5 markup
-- TailwindCSS
 - Mobile-first workflow
+- [TypeScript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/) - A utility-first CSS framework
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
 - [Headless UI](https://headlessui.dev/) - UI Components

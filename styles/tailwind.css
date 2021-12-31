@@ -668,6 +668,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 1.5rem;
 }
 
+.h-11{
+  height: 2.75rem;
+}
+
+.h-7{
+  height: 1.75rem;
+}
+
 .max-h-\[70px\]{
   max-height: 70px;
 }
@@ -706,6 +714,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-6{
   width: 1.5rem;
+}
+
+.w-11{
+  width: 2.75rem;
+}
+
+.w-7{
+  width: 1.75rem;
 }
 
 .min-w-\[134px\]{
@@ -943,6 +959,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-sm{
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .font-bold{

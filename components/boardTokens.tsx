@@ -23,7 +23,7 @@ export function IconToken({
           ? "bg-teritiary"
           : "bg-secondary"
       } ${
-        boardSize === FOUR_BY_FOUR ? "h-16 w-16" : "h-10 w-10"
+        boardSize === FOUR_BY_FOUR ? "h-16 w-16" : "h-12 w-12"
       } rounded-full text-quaternary-shade font-bold grid grid-cols-1`}
       onClick={() => onClick(token)}
       disabled={
@@ -35,7 +35,7 @@ export function IconToken({
       <FontAwesomeIcon
         icon={token.value as IconName}
         className={`${token.state === TokenState.Hidden ? "hidden" : "block"} ${
-          boardSize === FOUR_BY_FOUR ? "h-8 w-8" : "h-6 w-6"
+          boardSize === FOUR_BY_FOUR ? "h-8 w-8" : "h-7 w-7"
         } place-self-center`}
       />
     </button>
@@ -61,7 +61,7 @@ export function NumberToken({
           ? "bg-teritiary"
           : "bg-secondary"
       } ${
-        boardSize === FOUR_BY_FOUR ? "h-16 w-16" : "h-10 w-10"
+        boardSize === FOUR_BY_FOUR ? "h-16 w-16" : "h-12 w-12"
       } rounded-full text-quaternary-shade font-bold`}
       key={token.id}
       onClick={() => onClick(token)}

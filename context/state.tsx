@@ -20,7 +20,7 @@ const initialContextValue: AppContextType = {
   settings: {
     theme: "Numbers",
     numberOfPlayers: "1",
-    gridSize: "4x4",
+    gridSize: "6x6",
   },
   setSettings: (settings: Settings) => {},
 };

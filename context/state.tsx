@@ -3,9 +3,9 @@ import {
   ReactNode,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from "react";
+import { FOUR_BY_FOUR } from "../data/models";
 import { Settings } from "../pages";
 
 type Props = {
@@ -20,7 +20,7 @@ const initialContextValue: AppContextType = {
   settings: {
     theme: "Numbers",
     numberOfPlayers: "1",
-    gridSize: "6x6",
+    gridSize: FOUR_BY_FOUR,
   },
   setSettings: (settings: Settings) => {},
 };

@@ -1,4 +1,7 @@
 // Based on Fisher-Yates shuffle
+
+import { Token } from "../data/models";
+
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 export default function shuffle(inputArray: Token[]): Token[] {
   let currentIndex = inputArray.length,

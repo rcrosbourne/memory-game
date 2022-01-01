@@ -20,10 +20,12 @@ export function IconToken({
         token.state === TokenState.Revealed
           ? "bg-primary"
           : token.state === TokenState.Hidden
-          ? "bg-teritiary"
+          ? "bg-tertiary"
           : "bg-secondary"
       } ${
-        boardSize === FOUR_BY_FOUR ? "h-16 w-16" : "h-12 w-12"
+        boardSize === FOUR_BY_FOUR
+          ? "h-16 w-16 md:h-28 md:w-28"
+          : "h-12 w-12 md:h-20 md:w-20"
       } rounded-full text-quaternary-shade font-bold grid grid-cols-1`}
       onClick={() => onClick(token)}
       disabled={
@@ -35,7 +37,9 @@ export function IconToken({
       <FontAwesomeIcon
         icon={token.value as IconName}
         className={`${token.state === TokenState.Hidden ? "hidden" : "block"} ${
-          boardSize === FOUR_BY_FOUR ? "h-8 w-8" : "h-7 w-7"
+          boardSize === FOUR_BY_FOUR
+            ? "h-8 w-8 md:h-20 md:w-20"
+            : "h-7 w-7 md:h-14 md:w-14"
         } place-self-center`}
       />
     </button>
@@ -58,10 +62,12 @@ export function NumberToken({
         token.state === TokenState.Revealed
           ? "bg-primary"
           : token.state === TokenState.Hidden
-          ? "bg-teritiary"
+          ? "bg-tertiary"
           : "bg-secondary"
       } ${
-        boardSize === FOUR_BY_FOUR ? "h-16 w-16" : "h-12 w-12"
+        boardSize === FOUR_BY_FOUR
+          ? "h-16 w-16 md:h-28 md:w-28"
+          : "h-12 w-12 md:h-20 md:w-20"
       } rounded-full text-quaternary-shade font-bold`}
       key={token.id}
       onClick={() => onClick(token)}
@@ -73,7 +79,9 @@ export function NumberToken({
     >
       <span
         className={`${token.state === TokenState.Hidden ? "hidden" : "block"} ${
-          boardSize === FOUR_BY_FOUR ? "text-4xl" : "text-2xl"
+          boardSize === FOUR_BY_FOUR
+            ? "text-4xl md:text-6xl"
+            : "text-2xl md:text-5xl"
         } font-bold`}
       >
         {token.value}

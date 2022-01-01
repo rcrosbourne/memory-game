@@ -5,15 +5,18 @@
 
 @layer components {
   .btn-active {
-    @apply bg-teritiary;
+    @apply bg-tertiary;
   }
   .btn-idle {
     @apply bg-secondary;
   }
   .btn-secondary {
-    @apply rounded-full  text-primary-shade font-bold hover:bg-teritiary-shade transition-colors focus:outline-none focus:ring-2 focus:ring-quaternary focus:ring-opacity-75;
+    @apply rounded-full  text-primary-shade font-bold hover:bg-tertiary-shade transition-colors focus:outline-none focus:ring-2 focus:ring-quaternary focus:ring-opacity-75;
   }
   .btn-primary {
     @apply bg-primary text-quaternary-shade rounded-full font-bold hover:bg-primary-hover transition-colors focus:outline-none focus:ring-2 focus:ring-primary-hover focus:ring-opacity-75;
+  }
+  .btn-tertiary {
+    @apply text-black bg-quinary-shade rounded-full font-bold hover:bg-tertiary-shade hover:text-quaternary-shade transition-colors focus:outline-none focus:ring-2 focus:ring-tertiary-shade focus:ring-opacity-75;
   }
 }

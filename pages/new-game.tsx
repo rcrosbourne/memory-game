@@ -163,22 +163,38 @@ const NewGame: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className=" bg-quaternary-shade min-h-screen w-full grid p-6 mx-auto">
+      <main className=" bg-quaternary-shade min-h-screen w-full grid p-6 mx-auto md:p-10">
         <div className="container mx-auto text-center max-w-[327px] md:max-w-[654px]">
           {/* Top Menu */}
           <div className="grid grid-cols-2 place-items-center">
-            <h2 className="w-full text-left text-2xl font-bold">memory</h2>
+            <h1 className="w-full text-left text-2xl font-bold md:text-4xl">
+              memory
+            </h1>
             <button
-              className="btn-primary py-2 px-4 place-self-end"
+              className="btn-primary py-2 px-4 place-self-end md:hidden"
               onClick={openMenuModal}
             >
               Menu
             </button>
+            <div className="hidden md:grid md:grid-cols-2 md:gap-4">
+              <button
+                className="btn-primary py-2 px-4 place-self-end md:text-xl"
+                onClick={openMenuModal}
+              >
+                Restart
+              </button>
+              <button
+                className="btn-tertiary py-2 px-4 place-self-end md:text-xl"
+                onClick={openMenuModal}
+              >
+                New Game
+              </button>
+            </div>
           </div>
           {/* Game board */}
 
           {appContext.settings.gridSize === FOUR_BY_FOUR && (
-            <div className="grid grid-cols-4 gap-3 mt-20">
+            <div className="grid grid-cols-4 gap-3 mt-20 md:max-w-[540px] mx-auto">
               {gameTokens.map((token) =>
                 token.isIcon ? (
                   <IconToken
@@ -202,7 +218,7 @@ const NewGame: NextPage = () => {
           )}
           {appContext.settings.gridSize === SIX_BY_SIX && (
             // TODO: fix this for mobile
-            <div className="grid grid-cols-6 gap-2 mt-20">
+            <div className="grid grid-cols-6 gap-2 mt-20 md:max-w-[572px] mx-auto">
               {gameTokens.map((token) =>
                 token.isIcon ? (
                   <IconToken
@@ -225,20 +241,21 @@ const NewGame: NextPage = () => {
             </div>
           )}
         </div>
-        <div className="grid grid-cols-2 mt-24 gap-8 max-h-[70px]">
-          <div className="bg-quinary-shade rounded-md grid py-2 px-8">
-            <span className="text-center text-secondary-shade font-bold">
+        {/* Statistics section */}
+        <div className="grid grid-cols-2 mt-24 gap-8 max-h-[70px] mx-auto w-full md:max-w-[540px]">
+          <div className="bg-quinary-shade rounded-md grid py-2 px-8 md:grid-cols-2 md:place-content-center">
+            <span className="text-center text-secondary-shade font-bold md:place-self-center md:text-left md:w-full md:text-lg">
               Time
             </span>
-            <span className="block text-center flex-1 text-teritiary font-bold text-2xl">
+            <span className="block text-center flex-1 text-tertiary font-bold text-2xl md:place-self-center md:text-right md:w-full md:text-3xl">
               {new Date(gameClock * 1000).toISOString().substr(14, 5)}
             </span>
           </div>
-          <div className="bg-quinary-shade rounded-md px-8 py-2 grid">
-            <span className="text-center text-secondary-shade font-bold">
+          <div className="bg-quinary-shade rounded-md px-8 py-2 grid md:grid-cols-2 md:place-content-center">
+            <span className="text-center text-secondary-shade font-bold md:place-self-center md:text-left md:w-full md:text-lg">
               Moves
             </span>
-            <span className="block text-center text-teritiary font-bold text-2xl">
+            <span className="block text-center text-tertiary font-bold text-2xl md:place-self-center md:text-right md:w-full md:text-3xl">
               {moves}
             </span>
           </div>

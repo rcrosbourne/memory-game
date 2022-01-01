@@ -35,10 +35,6 @@ Users should be able to:
 ![Mobile Game Menu](https://github.com/rcrosbourne/memory-game/blob/main/.screenshots/Screen%20Shot%202022-01-01%20at%2006.25.28.png)
 ![Tablet Layout](https://github.com/rcrosbourne/memory-game/blob/main/.screenshots/Screen%20Shot%202022-01-01%20at%2006.25.03.png)
 
-I will udpate this
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
-
 ### Links
 
 - Solution URL: [Github Repo](https://github.com/rcrosbourne/memory-game)

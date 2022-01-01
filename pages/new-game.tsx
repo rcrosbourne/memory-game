@@ -179,13 +179,13 @@ const NewGame: NextPage = () => {
             <div className="hidden md:grid md:grid-cols-2 md:gap-4">
               <button
                 className="btn-primary py-2 px-4 place-self-end md:text-xl"
-                onClick={openMenuModal}
+                onClick={restartGame}
               >
                 Restart
               </button>
               <button
                 className="btn-tertiary py-2 px-4 place-self-end md:text-xl"
-                onClick={openMenuModal}
+                onClick={setupNewGame}
               >
                 New Game
               </button>

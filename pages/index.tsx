@@ -44,9 +44,9 @@ const Home: NextPage = () => {
 
       <main className=" bg-quaternary min-h-screen w-full grid px-6 mx-auto">
         <div className="container mx-auto text-center max-w-[327px] md:max-w-[654px]">
-          <h2 className="text-primary-shade font-atkinson-hyperlegible text-2xl mt-20 font-bold md:mt-40 md:text-5xl">
+          <h1 className="text-primary-shade font-atkinson-hyperlegible text-2xl mt-20 font-bold md:mt-40 md:text-5xl">
             memory
-          </h2>
+          </h1>
           <div className="bg-primary-shade rounded-xl mt-10 p-6 grid gap-y-8 md:mt-20 md:p-14 md:max-w-[654px]">
             {/* Theme Selection Radio Group */}
             <RadioGroup

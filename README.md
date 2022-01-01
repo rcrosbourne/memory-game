@@ -31,7 +31,9 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![Mobile New Game Screen](https://github.com/rcrosbourne/memory-game/blob/main/.screenshots/Screen%20Shot%202022-01-01%20at%2006.25.38.png)
+![Mobile Game Menu](https://github.com/rcrosbourne/memory-game/blob/main/.screenshots/Screen%20Shot%202022-01-01%20at%2006.25.28.png)
+![Tablet Layout](https://github.com/rcrosbourne/memory-game/blob/main/.screenshots/Screen%20Shot%202022-01-01%20at%2006.25.03.png)
 
 I will udpate this
 

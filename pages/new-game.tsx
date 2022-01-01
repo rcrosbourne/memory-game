@@ -164,9 +164,9 @@ const NewGame: NextPage = () => {
       </Head>
 
       <main className=" bg-quaternary-shade min-h-screen w-full grid p-6 mx-auto md:p-10">
-        <div className="container mx-auto text-center max-w-[327px] md:max-w-[654px]">
+        <div className="container mx-auto text-center max-w-[327px] md:max-w-[654px] xl:max-w-[1110px]">
           {/* Top Menu */}
-          <div className="grid grid-cols-2 place-items-center">
+          <div className="grid grid-cols-2 place-items-center w-full">
             <h1 className="w-full text-left text-2xl font-bold md:text-4xl">
               memory
             </h1>
@@ -176,9 +176,9 @@ const NewGame: NextPage = () => {
             >
               Menu
             </button>
-            <div className="hidden md:grid md:grid-cols-2 md:gap-4">
+            <div className="hidden md:grid md:grid-cols-2 md:gap-4 place-self-end">
               <button
-                className="btn-primary py-2 px-4 place-self-end md:text-xl"
+                className="btn-primary py-2 px-4 place-self-end md:text-xl "
                 onClick={restartGame}
               >
                 Restart

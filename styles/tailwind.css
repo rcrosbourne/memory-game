@@ -762,6 +762,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   place-content: center;
 }
 
+.place-content-end{
+  place-content: end;
+}
+
 .place-items-center{
   place-items: center;
 }
@@ -1202,5 +1206,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .md\:text-lg{
     font-size: 1.125rem;
     line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1280px){
+  .xl\:max-w-\[1110px\]{
+    max-width: 1110px;
   }
 }

@@ -63,7 +63,8 @@ For the next challenge I may take the spacing from the design system and update 
 
 ### Continued development
 
-The current solution only supports solo play. I will continue to work on multiplayer feature as well as maybe a score board. I may also add more animations and effects to the game.
+The current solution only supports solo play. I will continue to work on multiplayer feature as well as a score board. 
+I may also add animations and effects to the game when I am learning framer motion. 
 
 ### Useful resources
 
